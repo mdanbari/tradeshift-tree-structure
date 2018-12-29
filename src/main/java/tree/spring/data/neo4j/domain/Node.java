@@ -14,7 +14,7 @@ public class Node {
 	@GeneratedValue
 	private Long id;
 	private String name;
-	private Integer height;
+	//private Integer height;
 
 	@Relationship(type = "child_rel", direction = Relationship.OUTGOING)
 	private List<Node> children;
@@ -25,6 +25,7 @@ public class Node {
 
 	public Node(String name) {
 		this.name = name;
+		
 	}
 
 	public Long getId() {
@@ -54,12 +55,12 @@ public class Node {
 		return children;
 	}
 
-	public Integer getHeight() {
-		return height;
-	}
-
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
+//	public Integer getHeight() {
+//		return height;
+//	}
+//
+//	public void setHeight(Integer height) {
+//		this.height = height;
+//	}
 
 }

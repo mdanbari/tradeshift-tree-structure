@@ -36,31 +36,31 @@ public class MovieRepositoryTest {
 	@Rollback(false)
 	public void setUp() {
 		
-		nodeRepository.deleteAll();
-		
-		Node root = new Node("Boss");
-		nodeRepository.save(root);
-		Node child1 = new Node("Child1");
-		root.addChild(child1);
-		//child1.setParent(root);
-		nodeRepository.save(child1);
-		Node child2 = new Node("Child2");
-		//child2.setParent(root);
-		root.addChild(child2);
-		nodeRepository.save(child2);
-		Node child3 = new Node("Child3");
-		//child3.setParent(root);
-		nodeRepository.save(child3);
-		root.addChild(child3);
-		
-		Node child4 = new Node("Child4");
-		nodeRepository.save(child4);
-		child1.addChild(child4);
-		//child4.setParent(child1);
-		nodeRepository.save(child1);
-		
-		nodeRepository.save(root);
-		
+//		nodeRepository.deleteAll();
+//		
+//		Node root = new Node("Boss");
+//		nodeRepository.save(root);
+//		Node child1 = new Node("Child1");
+//		root.addChild(child1);
+//		//child1.setParent(root);
+//		nodeRepository.save(child1);
+//		Node child2 = new Node("Child2");
+//		//child2.setParent(root);
+//		root.addChild(child2);
+//		nodeRepository.save(child2);
+//		Node child3 = new Node("Child3");
+//		//child3.setParent(root);
+//		nodeRepository.save(child3);
+//		root.addChild(child3);
+//		
+//		Node child4 = new Node("Child4");
+//		nodeRepository.save(child4);
+//		child1.addChild(child4);
+//		//child4.setParent(child1);
+//		nodeRepository.save(child1);
+//		
+//		nodeRepository.save(root);
+//		
 		
 		
 		

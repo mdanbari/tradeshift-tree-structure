@@ -25,34 +25,34 @@ public class NodeService {
 
 	
 
-	@Transactional
-	public void populateDB() {
-		nodeRepository.deleteAll();
-
-		Node root = new Node("Boss");
-		Node child1 = new Node("Child1");
-		Node child2 = new Node("Child2");
-		Node child3 = new Node("Child3");
-		Node child4 = new Node("Child4");
-		
-		root.setHeight(0);
-		child1.setHeight(root.getHeight() + 1);
-		child2.setHeight(root.getHeight() + 1);
-		child3.setHeight(root.getHeight() + 1);
-		child4.setHeight(child1.getHeight() + 1);
-		
-		root.addChild(child1);
-		root.addChild(child2);
-		root.addChild(child3);
-		child1.addChild(child4);
-		
-		nodeRepository.save(root);		
-		nodeRepository.save(child1);
-		nodeRepository.save(child2);
-		nodeRepository.save(child3);
-		nodeRepository.save(child4);
-
-	}
+//	@Transactional
+//	public void populateDB() {
+//		nodeRepository.deleteAll();
+//
+//		Node root = new Node("Boss");
+//		Node child1 = new Node("Child1");
+//		Node child2 = new Node("Child2");
+//		Node child3 = new Node("Child3");
+//		Node child4 = new Node("Child4");
+//		
+//		root.setHeight(0);
+//		child1.setHeight(root.getHeight() + 1);
+//		child2.setHeight(root.getHeight() + 1);
+//		child3.setHeight(root.getHeight() + 1);
+//		child4.setHeight(child1.getHeight() + 1);
+//		
+//		root.addChild(child1);
+//		root.addChild(child2);
+//		root.addChild(child3);
+//		child1.addChild(child4);
+//		
+//		nodeRepository.save(root);		
+//		nodeRepository.save(child1);
+//		nodeRepository.save(child2);
+//		nodeRepository.save(child3);
+//		nodeRepository.save(child4);
+//
+//	}
 
 
 	
@@ -73,7 +73,7 @@ public class NodeService {
 		Iterator<Node> currentNodeChildrenItr = currentNodeChildrenCol.iterator();
 		while (currentNodeChildrenItr.hasNext()) {
 			Node currentNodeChild = currentNodeChildrenItr.next();
-			currentNodeChild.setHeight(oldParent.getHeight() + 1);
+			//currentNodeChild.setHeight(oldParent.getHeight() + 1);
 			nodeRepository.save(currentNodeChild);
 			oldParentChildrenList.add(currentNodeChild);
 		}
@@ -84,7 +84,7 @@ public class NodeService {
 		
 		Node newParent = nodeRepository.findByName(newParentName);
 		Collection<Node> newParentCol = nodeRepository.getChildren(newParentName);
-		currentNode.setHeight(newParent.getHeight() + 1);
+		//currentNode.setHeight(newParent.getHeight() + 1);
 		nodeRepository.save(currentNode);
 		newParentCol.add(currentNode);
 		newParent.setChildren(new ArrayList<>(newParentCol));
@@ -137,7 +137,7 @@ public class NodeService {
 		Node currentNode = nodeRepository.findByName(nodeName);
 		NodeInfo nodeInfo = new NodeInfo();
 		nodeInfo.setNodeId(currentNode.getId());
-		nodeInfo.setHeight(currentNode.getHeight());
+		//nodeInfo.setHeight(currentNode.getHeight());
 		nodeInfo.setParentName(getParentNode(nodeName).getName());
 		nodeInfo.setRootName(getRootNode(nodeName));
 		return nodeInfo.toString();

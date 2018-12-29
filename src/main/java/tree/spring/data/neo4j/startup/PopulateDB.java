@@ -1,6 +1,13 @@
 package tree.spring.data.neo4j.startup;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import tree.spring.data.neo4j.domain.Node;
 import tree.spring.data.neo4j.repositories.NodeRepository;
@@ -8,53 +15,45 @@ import tree.spring.data.neo4j.repositories.NodeRepository;
 @Component
 public class PopulateDB {
 
-    private final NodeRepository nodeRepository;
+	private final NodeRepository nodeRepository;
 
-    public PopulateDB(NodeRepository nodeRepository) {
-        this.nodeRepository = nodeRepository;
-    }
+	public PopulateDB(NodeRepository nodeRepository) {
+		this.nodeRepository = nodeRepository;
+	}
 
+	
+	// public static int nodeCounter = 1;
 
-    public void populate() {
-    	nodeRepository.deleteAll();
+	public static final int nodeMaxNum = 20;
 
+	@PostConstruct
+	@Transactional
+	public void generateRandomBinaryTree() {
+		nodeRepository.deleteAll();
 		Node root = new Node("Boss");
-		Node child1 = new Node("Child1");
-		Node child2 = new Node("Child2");
-		Node child3 = new Node("Child3");
-		Node child4 = new Node("Child4");
-		
-		root.setHeight(0);
-		child1.setHeight(root.getHeight() + 1);
-		child2.setHeight(root.getHeight() + 1);
-		child3.setHeight(root.getHeight() + 1);
-		child4.setHeight(child1.getHeight() + 1);
-		
-		root.addChild(child1);
-		root.addChild(child2);
-		root.addChild(child3);
-		child1.addChild(child4);
-		
-		nodeRepository.save(root);		
-		nodeRepository.save(child1);
-		nodeRepository.save(child2);
-		nodeRepository.save(child3);
-		nodeRepository.save(child4);
+		List<Node> nodeList = Arrays.asList(nodeRepository.save(new Node("Child1")),
+				nodeRepository.save(new Node("Child2")));
+		root.setChildren(nodeList);
+		nodeRepository.save(root);
+		generateNodeAndChildren(nodeList, nodeMaxNum);
 
-    }
+	}
 
-    public static int nodeCounter = 3;
-    public static int nodeMaxNum = 100;
+	@Transactional
+	public void generateNodeAndChildren(List<Node> nodeList, int nodeMaxNum) {
+		int nodeCounter = 3;
+		while (nodeCounter <= nodeMaxNum) {
+			List<Node> childList = new ArrayList<>();
+			for (Node node : nodeList) {
+				List<Node> binaryChild = Arrays.asList(nodeRepository.save(new Node("Child" + nodeCounter++)),
+						nodeRepository.save(new Node("Child" + nodeCounter++)));
+				node.setChildren(binaryChild);
+				nodeRepository.save(node);
+				childList.addAll(binaryChild);
+			}
+			nodeList = childList;
+		}
 
-
-
-    public void generateRandomBinaryTree() {
-    }
-
-
+	}
 
 }
-
-
-
-

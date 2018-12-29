@@ -36,10 +36,10 @@ public class NodeController {
 		return nodeService.getRootNode(nodeName);
 	}
 	
-	@GetMapping("/populateDB")
-	public void populateDB() {
-		nodeService.populateDB();
-	}
+//	@GetMapping("/populateDB")
+//	public void populateDB() {
+//		nodeService.populateDB();
+//	}
 	
 	@GetMapping("/getNodeInfo")
 	public String getNodeInfo(@RequestParam(value = "nodeName") String nodeName) {
