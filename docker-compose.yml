@@ -1,5 +1,10 @@
 version: '3'
 services:
+  java:
+    container_name: openjdk8
+    image: openjdk:8    
+    volumes:
+    - .:/app/java 
   neo4j:
     image: neo4j:3.2
     ports:
@@ -16,6 +21,7 @@ services:
       - "8080"
     command: mvn clean spring-boot:run
     depends_on:
-      - nginx
-      - mysql
+      - java
+      - neo4j
+      
 
