@@ -3,9 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.neo4j.examples</groupId>
-    <artifactId>sdn5-movies</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>tree.spring.data.neo4j</groupId>
+    <artifactId>tree-structure</artifactId>
     <packaging>jar</packaging>
 
     <name>SDN5 Movies</name>
@@ -69,6 +68,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <finalName>tree-structure</finalName>
     </build>
 
 </project>
