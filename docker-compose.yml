@@ -1,0 +1,21 @@
+version: '3'
+services:
+  neo4j:
+    image: neo4j:3.2
+    ports:
+    - "7474:7474"
+    - "7687:7687"
+  app:
+    restart: always
+    build: ./app
+    working_dir: /app
+    volumes:
+      - ./app:/app
+      - ~/.m2:/root/.m2
+    expose:
+      - "8080"
+    command: mvn clean spring-boot:run
+    depends_on:
+      - nginx
+      - mysql
+
