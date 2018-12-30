@@ -13,6 +13,7 @@ services:
   
   neo4j:
     image: neo4j:3.2
+    network_mode: "bridge"
     ports:
       - "7474:7474"
       - "7687:7687"
