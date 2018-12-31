@@ -24,7 +24,7 @@ public class PopulateDB {
 	
 	// public static int nodeCounter = 1;
 
-	public static final int nodeMaxNum = 10000;
+	public static final int nodeMaxNum = 1000;
 
 	@PostConstruct
 	@Transactional
