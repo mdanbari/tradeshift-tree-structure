@@ -2,23 +2,16 @@ version: '2.0'
 
 services:
   springboot:
-    build: .    
-    restart: always
+    build: .   
     container_name: springboot
     ports:
-      - 8080:8080
+      - 8085:8085
     links:
       - neo4j
-    depends_on:
-      - neo4j
-  
   neo4j:
     image: neo4j:3.2
-    network_mode: "bridge"
+    container_name: neo4j
     ports:
-      - "7474:7474"
-      - "7687:7687"
-
-
-      
-
+      - 7474:7474
+      - 7687:7687
+    
