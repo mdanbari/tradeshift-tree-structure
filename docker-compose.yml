@@ -7,15 +7,9 @@ services:
     container_name: springboot
     ports:
       - 8080:8080
-    links:
-      - neo4j
-    depends_on:
-      - neo4j
-  
-  neo4j:
-    image: neo4j:3.2
-    network_mode: "bridge"
-    ports:
+    neo4j:
+      image: neo4j:3.2
+      ports:
       - "7474:7474"
       - "7687:7687"
 
