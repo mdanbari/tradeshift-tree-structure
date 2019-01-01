@@ -1,4 +1,4 @@
-package movies.spring.data.neo4j.repositories;
+package tree.spring.data.neo4j;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ import tree.spring.data.neo4j.repositories.NodeRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-public class MovieRepositoryTest {
+public class TreeTest {
 
 	
 	

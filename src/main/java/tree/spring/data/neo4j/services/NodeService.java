@@ -1,9 +1,6 @@
 package tree.spring.data.neo4j.services;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import tree.spring.data.neo4j.domain.Node;
 import tree.spring.data.neo4j.domain.NodeInfo;
 import tree.spring.data.neo4j.repositories.NodeRepository;
+
+import javax.annotation.PostConstruct;
 
 @Service
 public class NodeService {
@@ -25,34 +24,30 @@ public class NodeService {
 
 	
 
-//	@Transactional
-//	public void populateDB() {
-//		nodeRepository.deleteAll();
-//
-//		Node root = new Node("Boss");
-//		Node child1 = new Node("Child1");
-//		Node child2 = new Node("Child2");
-//		Node child3 = new Node("Child3");
-//		Node child4 = new Node("Child4");
-//		
-//		root.setHeight(0);
-//		child1.setHeight(root.getHeight() + 1);
-//		child2.setHeight(root.getHeight() + 1);
-//		child3.setHeight(root.getHeight() + 1);
-//		child4.setHeight(child1.getHeight() + 1);
-//		
-//		root.addChild(child1);
-//		root.addChild(child2);
-//		root.addChild(child3);
-//		child1.addChild(child4);
-//		
-//		nodeRepository.save(root);		
-//		nodeRepository.save(child1);
-//		nodeRepository.save(child2);
-//		nodeRepository.save(child3);
-//		nodeRepository.save(child4);
-//
-//	}
+	@Transactional
+	public void generateRandomBinaryTree(int nodeMaxNum) {
+		nodeRepository.deleteAll();
+		List<Node> nodeList = Arrays.asList(new Node("Boss"));
+		generateNodeAndChildren(nodeList, nodeMaxNum);
+
+	}
+
+	@Transactional
+	@SuppressWarnings("Duplicates")
+	public void generateNodeAndChildren(List<Node> nodeList, int nodeMaxNum) {
+		int nodeCounter = 2;
+		while (nodeCounter <= nodeMaxNum) {
+			List<Node> childList = new ArrayList<>();
+			for (Node node : nodeList) {
+				List<Node> binaryChild = Arrays.asList(nodeRepository.save(new Node("Child" + nodeCounter++)),
+						nodeRepository.save(new Node("Child" + nodeCounter++)));
+				node.setChildren(binaryChild);
+				nodeRepository.save(node);
+				childList.addAll(binaryChild);
+			}
+			nodeList = childList;
+		}
+	}
 
 
 	
@@ -148,6 +143,8 @@ public class NodeService {
 		Collection<Node> children = nodeRepository.getChildren(nodeName);
 		return new ArrayList<>(children);
 	}
+
+
 	
 	
 }

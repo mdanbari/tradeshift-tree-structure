@@ -7,9 +7,6 @@
     <artifactId>tree-structure</artifactId>
     <packaging>jar</packaging>
 
-    <name>SDN5 Movies</name>
-    <description>Demo web project for Spring Data using Spring Boot and Neo4j</description>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

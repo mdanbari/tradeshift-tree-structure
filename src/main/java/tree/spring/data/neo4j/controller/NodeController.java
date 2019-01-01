@@ -36,11 +36,11 @@ public class NodeController {
 		return nodeService.getRootNode(nodeName);
 	}
 	
-//	@GetMapping("/populateDB")
-//	public void populateDB() {
-//		nodeService.populateDB();
-//	}
-	
+	@GetMapping("/populateDB")
+	public void populateDB(@RequestParam(value = "nodeNum") Integer nodeNum) {
+		nodeService.generateRandomBinaryTree(nodeNum);
+	}
+
 	@GetMapping("/getNodeInfo")
 	public String getNodeInfo(@RequestParam(value = "nodeName") String nodeName) {
 		return nodeService.getNodeInfo(nodeName);
