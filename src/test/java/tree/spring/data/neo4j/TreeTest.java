@@ -191,6 +191,7 @@ public class TreeTest {
 		assertEquals(child3_height, 1);
 		assertEquals(child4_height, 2);
 
-	}
+	}	
+	
 
 }

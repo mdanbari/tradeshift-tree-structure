@@ -31,17 +31,19 @@ public class NodeService {
 	@Async
 	public void generateRandomBinaryTree(int nodeMaxNum) {
 		nodeRepository.deleteAll();
-		List<Node> nodeList = Arrays.asList(new Node("Boss"));
+		List<Node> nodeList = Arrays.asList(new Node("Root"));
 		generateNodeAndChildren(nodeList, nodeMaxNum);
 
 	}
 
 	@Transactional
 	public void generateNodeAndChildren(List<Node> nodeList, int nodeMaxNum) {
-		int nodeCounter = 2;
+		int nodeCounter = 1;
 		while (nodeCounter <= nodeMaxNum) {
 			List<Node> childList = new ArrayList<>();
 			for (Node node : nodeList) {
+				if(nodeCounter >= nodeMaxNum)
+					break;
 				List<Node> binaryChild = Arrays.asList(nodeRepository.save(new Node("Child" + nodeCounter++)),
 						nodeRepository.save(new Node("Child" + nodeCounter++)));
 				node.setChildren(binaryChild);
@@ -56,6 +58,8 @@ public class NodeService {
 	
 	@Transactional
 	public void changeParentNode(String nodeName, String newParentName) {
+		
+		long start = System.currentTimeMillis();	
 		
 		Node currentNode = nodeRepository.findByName(nodeName);
 		Collection<Node> oldParentCol = nodeRepository.getParent(nodeName);
@@ -87,6 +91,10 @@ public class NodeService {
 		newParentCol.add(currentNode);
 		newParent.setChildren(new ArrayList<>(newParentCol));
 		nodeRepository.save(newParent);
+		
+		long finish = System.currentTimeMillis();
+		long timeElapsed = finish - start;
+		System.out.println("ChangeParent Execution Time: " + timeElapsed);
 		
 		
 		
@@ -143,8 +151,13 @@ public class NodeService {
 
 	@Transactional(readOnly = true)
 	public List<Node> getNodeChildren(String nodeName) {
+		long start = System.currentTimeMillis();	
 		Collection<Node> children = nodeRepository.getChildren(nodeName);
+		long finish = System.currentTimeMillis();
+		long timeElapsed = finish - start;
+		System.out.println("get Node Children Execution Time: " + timeElapsed);
 		return new ArrayList<>(children);
+		
 	}
 
 
