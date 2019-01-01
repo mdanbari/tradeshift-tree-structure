@@ -29,6 +29,7 @@ Each node should have the following info:
 4) the height of the node. In the above example,height(root) = 0 and height(a) == 1.
 
 # My Solution
+
 I have modeled the Co tree structure as a Graph. A Tree is just a restricted form of a Graph.
 Trees have direction (parent / child relationships) and don't contain cycles. They fit with in the category of Directed Acyclic Graphs (or a DAG).
 So Trees are DAGs with the restriction that a child can only have one parent.
@@ -45,6 +46,7 @@ Graph databases are much faster than relational databases for connected data. A 
 Ironically, legacy relational database management systems (RDBMS) are poor at handling relationships between data points. Their tabular data models and rigid schemas make it difficult to add new or different kinds of connections
 
 ## Neo4j
+
 According to my resarch and neo4j site :
 
 *  Neo4j delivers the lightning-fast read and write performance you need
@@ -54,6 +56,36 @@ According to my resarch and neo4j site :
 *  Using Cypher, the world’s most powerful and productive graph query language.
 
 ## Spring Boot and Spring Data Neo4j
+
 Spring Data Neo4j is core part of the Spring Data project which aims to provide convenient data access for NoSQL databases.
 It uses Neo4j-OGM (ike Spring Data JPA uses JPA) under the hood and provides functionality known from the Spring Data world, like repositories, derived finders or auditing.
 it offers advanced features to map annotated entity classes to the Neo4j Graph Database.
+
+## Highlight Implementations:
+Following block code are the core of implementations
+### Node and NodeInfo Data Models:
+```java
+@NodeEntity
+public class Node {	
+	@Id
+	@GeneratedValue
+	private Long id;
+	private String name;
+	@Relationship(type = "child_rel", direction = Relationship.OUTGOING)
+	private List<Node> children;
+}
+```
+
+### Repository and queries:
+```SQL
+Node findByName(@Param("name") String title);
+
+@Query("MATCH (p)-[r:child_rel]->(n) WHERE n.name = {name} RETURN p")
+Collection<Node> getParent(@Param("name") String name);
+
+@Query("MATCH (p)-[r:child_rel]->(n) WHERE p.name = {name} RETURN n")
+Collection<Node> getChildren(@Param("name") String name);
+
+@Query("MATCH ()-[r:child_rel]-(n) WHERE n.name = {name} DELETE r")
+Collection<Node> deleteRelation(@Param("name") String name);
+```
