@@ -27,7 +27,7 @@ public class NodeController {
 	}
 	
 	@GetMapping("/calculateHeight")
-	public int calculateDepth(@RequestParam(value = "nodeName") String nodeName) {
+	public int calculateHeight(@RequestParam(value = "nodeName") String nodeName) {
 		return nodeService.calculateHeight(nodeName);
 	}
 	

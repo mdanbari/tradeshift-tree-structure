@@ -94,7 +94,7 @@ public class NodeService {
 		
 		long finish = System.currentTimeMillis();
 		long timeElapsed = finish - start;
-		System.out.println("ChangeParent Execution Time: " + timeElapsed);
+		System.out.println("*********** ChangeParent Execution Time (MiliSecond): " + timeElapsed);
 		
 		
 		
@@ -143,7 +143,7 @@ public class NodeService {
 		Node currentNode = nodeRepository.findByName(nodeName);
 		NodeInfo nodeInfo = new NodeInfo();
 		nodeInfo.setNodeId(currentNode.getId());
-		//nodeInfo.setHeight(currentNode.getHeight());
+		nodeInfo.setHeight(calculateHeight(nodeName));
 		nodeInfo.setParentName(getParentNode(nodeName).getName());
 		nodeInfo.setRootName(getRootNode(nodeName));
 		return nodeInfo.toString();
@@ -155,7 +155,7 @@ public class NodeService {
 		Collection<Node> children = nodeRepository.getChildren(nodeName);
 		long finish = System.currentTimeMillis();
 		long timeElapsed = finish - start;
-		System.out.println("get Node Children Execution Time: " + timeElapsed);
+		System.out.println("*********** get Node Children Execution Time (MiliSecond): " + timeElapsed);
 		return new ArrayList<>(children);
 		
 	}
