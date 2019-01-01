@@ -1,15 +1,18 @@
 package tree.spring.data.neo4j.services;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tree.spring.data.neo4j.domain.Node;
 import tree.spring.data.neo4j.domain.NodeInfo;
 import tree.spring.data.neo4j.repositories.NodeRepository;
-
-import javax.annotation.PostConstruct;
 
 @Service
 public class NodeService {
@@ -25,6 +28,7 @@ public class NodeService {
 	
 
 	@Transactional
+	@Async
 	public void generateRandomBinaryTree(int nodeMaxNum) {
 		nodeRepository.deleteAll();
 		List<Node> nodeList = Arrays.asList(new Node("Boss"));
@@ -33,7 +37,6 @@ public class NodeService {
 	}
 
 	@Transactional
-	@SuppressWarnings("Duplicates")
 	public void generateNodeAndChildren(List<Node> nodeList, int nodeMaxNum) {
 		int nodeCounter = 2;
 		while (nodeCounter <= nodeMaxNum) {
