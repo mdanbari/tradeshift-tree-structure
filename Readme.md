@@ -138,6 +138,9 @@ the result will be :
 ![change-parent-tree](https://user-images.githubusercontent.com/28094065/50606610-99a70f80-0edb-11e9-828b-af59357b536a.png)
 
 
+### what is happen after changing the parent of Child4?
+all the children of Child4 joined to Child1( old parent of Child4 ) and Child4 then joined to its new parent Child6
+
 
 ## Code Walkthrough
 
