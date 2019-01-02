@@ -124,14 +124,20 @@ get the node info of given node
 ```
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/getNodeInfo?nodeName=Child4
 ```
-the sampel result for Child4 will be :
+the result for Child4 will be :
 ```
 NodeInfo{id = 7296, rootNode = 'Root', parentNode = 'Child1', height = '2'}
 ```
-get the node info of given node ( for example change che parent of Child4 and it's new parent will be Child4 )
+change parent of given node ( for example change the parent of Child4 and it's new parent will be Child6 )
 ```
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/chanegParentNode?nodeName=Child3&newParentName=Child4
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/chanegParentNode?nodeName=Child4&newParentName=Child6
 ```
+
+the result will be :
+
+![change-parent-tree](https://user-images.githubusercontent.com/28094065/50606398-d9b9c280-0eda-11e9-8861-9e3b92efb248.png)
+
+
 
 ## Code Walkthrough
 
