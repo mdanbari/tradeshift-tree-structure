@@ -116,7 +116,10 @@ to populate DB (generate random binary tree for test queries)
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/populateDB?nodeNum=15
 ```
 sample result in neo4j browser:
+
 ![sample-tree](https://user-images.githubusercontent.com/28094065/50605946-387e3c80-0ed9-11e9-88b7-54151b49adcd.png)
+
+
 get the node info of given node
 ```
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/getNodeInfo?nodeName=Child4
