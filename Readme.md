@@ -41,11 +41,8 @@ Graph databases work by storing the relationships along with the data.
 Because related nodes are physically linked in the database, accessing those relationships is as immediate as accessing the data itself.
 In other words, instead of calculating the relationship as relational databases must do, graph databases simply read the relationship from storage. Satisfying queries is a simple matter of walking, or “traversing,” the graph. 
 Graph databases are much faster than relational databases for connected data. A consequence of this is that query latency in a graph database is proportional to how much of the graph you choose to explore in a query, and is not proportional to the amount of data stored
-#Why Relational Databases No Longer Measure Up:
 
-Ironically, legacy relational database management systems (RDBMS) are poor at handling relationships between data points. Their tabular data models and rigid schemas make it difficult to add new or different kinds of connections
-
-## Neo4j
+## Whay choosing Neo4j ?
 
 According to my resarch and neo4j site :
 
@@ -55,14 +52,71 @@ According to my resarch and neo4j site :
 *  Index-free adjacency shortens read time and gets even better as data complexity grows. 
 *  Using Cypher, the world’s most powerful and productive graph query language.
 
-## Spring Boot and Spring Data Neo4j
+## Spring Boot and Spring Data Neo4j features
 
 Spring Data Neo4j is core part of the Spring Data project which aims to provide convenient data access for NoSQL databases.
 It uses Neo4j-OGM (ike Spring Data JPA uses JPA) under the hood and provides functionality known from the Spring Data world, like repositories, derived finders or auditing.
 it offers advanced features to map annotated entity classes to the Neo4j Graph Database.
 
-## Highlight Implementations:
-Following block code are the core of implementations
+## The Stack
+
+* Application Type: Spring-Boot Java Web Application with embedded tomcat
+* Web framework: Spring-Boot enabled Spring-WebMVC, Rest Controllers
+* Persistence Access: Spring-Data-Neo4j 5.0.5
+* Database: Neo4j-Server 3.5.1
+* Build tools and Dependency managment: Maven
+* Deployment : Docker Container
+
+## Build and Deploy Process
+### Step 0 (prerequisite)
+install docker, docker-compose, apache maven
+### Step 1 (Config Files)
+### application.properties parameters for setting neo4j host server and username and password
+```
+spring.data.neo4j.uri=bolt://neo4j:7687
+spring.data.neo4j.username=neo4j
+spring.data.neo4j.password=123
+```
+### docket-compose.yml file for defining containers, exposing port
+```
+version: '2.0'
+services:
+  springboot:
+    build: .   
+    container_name: springboot
+    ports:
+      - 8085:8080
+    links:
+      - neo4j
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j
+    ports:
+      - 7474:7474
+      - 7687:7687
+```     
+#### Step2 (Build and create jar file)
+```
+clean package -X
+```
+#### Step3 (Deploy)
+```
+docker-compose up --build
+```
+if everything goes well you can see the following result aftre running docker ps and spring boot container linked to neo4j :
+```
+CONTAINER ID          NAMES              PORTS                                                      
+6fdb6775e688          springboot 	 0.0.0.0:8085->8080/tcp                                     
+a9d097b48676          neo4j              0.0.0.0:7474->7474/tcp, 7473/tcp, 0.0.0.0:7687->7687/tcp   
+
+```
+##Endpoints
+```
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://192.168.52.130:8085/populateDB?nodeNum=15
+```
+
+## Code Walkthrough
+
 ### Node and NodeInfo Data Models:
 ```java
 @NodeEntity
