@@ -110,14 +110,29 @@ CONTAINER ID          NAMES              PORTS
 a9d097b48676          neo4j              0.0.0.0:7474->7474/tcp, 7473/tcp, 0.0.0.0:7687->7687/tcp   
 
 ```
-##Endpoints
+## Endpoints
+to populate DB (generate random binary tree for test queries)
 ```
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://192.168.52.130:8085/populateDB?nodeNum=15
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/populateDB?nodeNum=15
+```
+sample result in neo4j browser:
+![alt text](https://github.com/mdanbari/tradeshift-tree-structure/tree/master/src/main/resources/img/sample-tree.png)
+get the node info of given node
+```
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/getNodeInfo?nodeName=Child4
+```
+the sampel result for Child4 will be :
+```
+NodeInfo{id = 7296, rootNode = 'Root', parentNode = 'Child1', height = '2'}
+```
+get the node info of given node ( for example change che parent of Child4 and it's new parent will be Child4 )
+```
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/chanegParentNode?nodeName=Child3&newParentName=Child4
 ```
 
 ## Code Walkthrough
 
-### Node and NodeInfo Data Models:
+### Node and NodeInfo Data Models( using neo4j ogm):
 ```java
 @NodeEntity
 public class Node {	
