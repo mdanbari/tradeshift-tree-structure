@@ -68,9 +68,9 @@ it offers advanced features to map annotated entity classes to the Neo4j Graph D
 * Deployment : Docker Container
 
 ## Build and Deploy Process
-### Step 0 (prerequisite)
+### Step1 (Prerequisite)
 install docker, docker-compose, apache maven
-### Step 1 (Config Files)
+### Step2 (Config Files)
 ### application.properties parameters for setting neo4j host server and username and password
 ```
 spring.data.neo4j.uri=bolt://neo4j:7687
@@ -95,11 +95,11 @@ services:
       - 7474:7474
       - 7687:7687
 ```     
-#### Step2 (Build and create jar file)
+#### Step3 (Build and create jar file)
 ```
 clean package -X
 ```
-#### Step3 (Deploy)
+#### Step4 (Deploy)
 ```
 docker-compose up --build
 ```
@@ -110,13 +110,13 @@ CONTAINER ID          NAMES              PORTS
 a9d097b48676          neo4j              0.0.0.0:7474->7474/tcp, 7473/tcp, 0.0.0.0:7687->7687/tcp   
 
 ```
-## Endpoints
+## Endpoints:
 to populate DB (generate random binary tree for test queries)
 ```
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/populateDB?nodeNum=15
 ```
 sample result in neo4j browser:
-![alt text](https://github.com/mdanbari/tradeshift-tree-structure/tree/master/src/main/resources/img/sample-tree.png)
+(https://github.com/mdanbari/tradeshift-tree-structure/tree/master/src/main/resources/img/sample-tree.png)
 get the node info of given node
 ```
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://{IP}:8085/getNodeInfo?nodeName=Child4
