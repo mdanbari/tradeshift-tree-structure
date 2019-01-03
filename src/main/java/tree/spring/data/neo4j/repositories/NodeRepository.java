@@ -20,5 +20,9 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
 
 	@Query("MATCH ()-[r:child_rel]-(n) WHERE n.name = {name} DELETE r")
 	Collection<Node> deleteRelation(@Param("name") String name);
+	
+	@Query("MATCH (n) DETACH DELETE n")
+	void deleteAllNode();
+
 
 }

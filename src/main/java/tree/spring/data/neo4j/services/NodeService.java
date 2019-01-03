@@ -30,7 +30,7 @@ public class NodeService {
 	@Transactional
 	@Async
 	public void generateRandomBinaryTree(int nodeMaxNum) {
-		nodeRepository.deleteAll();
+		nodeRepository.deleteAllNode();
 		List<Node> nodeList = Arrays.asList(new Node("Root"));
 		generateNodeAndChildren(nodeList, nodeMaxNum);
 
